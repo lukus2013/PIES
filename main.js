@@ -65,7 +65,6 @@ const pies = [
     const selectedDiv = document.querySelector(divId);
     selectedDiv.innerHTML = textToPrint;
   }
-  // display buttons on the DOM
   const buttons = () => {
     const domString = `
     <button type="button" class="btn btn-primary" id="All">All</button>
@@ -78,24 +77,9 @@ const pies = [
   };
 
   const filterPies = (array, instructor) => {
-      return array.filter(pieObject => pieObject.instructer === instructor);
+      return array.filter(pieObject => pieObject.instructor === instructor);
   }
-  
-  const handleButtonClick = (event) => {
-    if (event.target.id === "All") {
-      console.log("The All Button");
-    }
-    if (event.target.id === "Trinity") {
-      console.log("Trinity's Button");
-    }
-    if (event.target.id === "Aja") {
-      console.log("Aja's Button");
-    }
-    if (event.target.id === "Doc") {
-      console.log("Doc's Button");
-    }
-  }
-  
+
   const pieBuilder = (piesArray) => {
     let domString = "";
     piesArray.forEach((pie) => {
@@ -113,19 +97,35 @@ const pies = [
   
     renderToDom("#piesContainer", domString)
   }
+
+  const handleButtonClick = (event) => {
+    if (event.target.id === "All") {
+      pieBuilder(pies);
+    }
+    if (event.target.id === "Trinity") {
+        const trinityPies = filterPies(pies, event.target.id);
+        pieBuilder(trinityPies);
+    }
+    if (event.target.id === "Aja") {
+        const ajaPies = filterPies(pies, event.target.id);
+        pieBuilder(ajaPies);
+    }
+    if (event.target.id === "Doc") {
+        const docPies = filterPies(pies, event.target.id);
+        pieBuilder(docPies);
+    }
+  }
+
   
-  // Handles the button events
   const buttonEvents = () => {
     document.querySelector('#buttonContainer')
       .addEventListener('click', handleButtonClick);
   }
   
   const init = () => {
-    // this starts the app
-    buttons(); // PUT DOM ELEMENTS FIRST
-    buttonEvents(); // EVENT LISTNERS AFTER
+    buttons(); 
+    buttonEvents(); 
     pieBuilder(pies);
   };
   
   init();
-  
